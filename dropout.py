@@ -17,6 +17,13 @@ def ReLuPrime(x):
     return np.where(x > 0, 1, 0)
 
 
+def dropout(x, ratio):
+    sample = np.random.binomial(n=1, p=1 - ratio, size=x.shape)
+    x *= sample
+    x /= 1 - ratio
+    return x
+
+
 def deepReLU(Weight1, Weight2, Weight3, Weight4, Label, Samples, lr, epochs):
 
     weightDim = Samples.shape[1] * Samples.shape[2]
@@ -31,10 +38,16 @@ def deepReLU(Weight1, Weight2, Weight3, Weight4, Label, Samples, lr, epochs):
             # forward
             v1 = np.matmul(Weight1, Data)
             y1 = ReLU(v1)
+            y1 = dropout(y1, 0.2)
+
             v2 = np.matmul(Weight2, y1)
             y2 = ReLU(v2)
+            y2 = dropout(y2, 0.2)
+
             v3 = np.matmul(Weight3, y2)
             y3 = ReLU(v3)
+            y3 = dropout(y3, 0.2)
+
             v4 = np.matmul(Weight4, y3)
             y4 = softmax(v4)
 
@@ -119,7 +132,7 @@ if __name__ == "__main__":
                       [0., 0., 0., 0., 1.]])
 
     lr = 1e-3
-    epoch = 10000
+    epoch = 1000
 
     Weight1 = np.random.rand(20, 25) * 2 - 1
     Weight2 = np.random.rand(20, 20) * 2 - 1
@@ -132,10 +145,13 @@ if __name__ == "__main__":
         Data = test_data[i, :, :].reshape(25, 1)
         v1 = np.matmul(Weight1, Data)
         y1 = ReLU(v1)
+
         v2 = np.matmul(Weight2, y1)
         y2 = ReLU(v2)
+
         v3 = np.matmul(Weight3, y2)
         y3 = ReLU(v3)
+
         v4 = np.matmul(Weight4, y3)
         y4 = softmax(v4)
         print("输出结果为：")
