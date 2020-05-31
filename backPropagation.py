@@ -106,7 +106,8 @@ def flexMmtBackProp(hiddenNeuron, Samples, lr, epoch, beta):
 
 if __name__ == "__main__":
 
-    Samples = np.array([[0, 0, 1, 0], [0, 1, 1, 1], [1, 0, 1, 1], [1, 1, 1, 0]])
+    Samples = np.array([[0, 0, 1, 0], [0, 1, 1, 1],
+                        [1, 0, 1, 1], [1, 1, 1, 0]])
     lr = 0.9
     epoch = 1000
     beta = 0.9
