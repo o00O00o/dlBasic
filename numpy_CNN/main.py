@@ -3,7 +3,6 @@ import numpy as np
 import scipy.io as scio
 
 
-
 train_num = 60000
 test_num = 10000
 
@@ -21,10 +20,10 @@ test_labels[test_labels==10] = 0
 
 batch_size = 64
 
-conv1 = Conv2D([batch_size, 28, 28, 1], 12, 5, 1)
+conv1 = Conv2D([batch_size, 28, 28, 1], 16, 5, 1)
 relu1 = Relu(conv1.output_shape)
 pool1 = MaxPooling(relu1.output_shape)
-conv2 = Conv2D(pool1.output_shape, 24, 3, 1)
+conv2 = Conv2D(pool1.output_shape, 32, 3, 1)
 relu2 = Relu(conv2.output_shape)
 pool2 = MaxPooling(relu2.output_shape)
 fc = FullyConnect(pool2.output_shape, 10)
